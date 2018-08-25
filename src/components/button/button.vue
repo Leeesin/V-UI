@@ -1,17 +1,29 @@
 <template>
-  <button class='v-button'
-          @click="handleClick"
-          :type="nativeType"
-          :class="[type?'v-button--'+type:'',size?'v-button--'+size:'']">
-    <span>
+  <div class='v-button'
+       @click="handleClick"
+       :class="[type?'v-button--'+type:'',
+                  size?'v-button--'+size:'',
+                  `icon-${iconPosition}`]">
+    <svg class="icon"
+         v-if='icon'>
+      <use :xlink:href='`#i-${icon}`'></use>
+    </svg>
+    <div class="content">
       <slot></slot>
-    </span>
-  </button>
+    </div>
+
+  </div>
 </template>
 
 <script>
 export default {
   props: {
+    icon: "",
+    iconPosition: {
+      type: String,
+
+      default: "left"
+    },
     type: {
       type: String,
       default: "primary",
@@ -25,10 +37,6 @@ export default {
       validator(val) {
         return ["small", "middle", "large"].includes(val);
       }
-    },
-    nativeType: {
-      type: String,
-      default: "button"
     }
   },
   data() {
@@ -58,11 +66,31 @@ $large: "20px";
 
 .v-button {
   box-sizing: border-box;
-  position: relative;
+  margin: 1em;
+  vertical-align: middle;
   border-radius: 2px;
   cursor: pointer;
-  border: none;
-  outline: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  > .icon {
+    order: 1;
+    padding-right: 0.3em;
+  }
+  > .content {
+    order: 2;
+  }
+  &.icon-right {
+    .icon {
+      order: 2;
+      padding-left: 0.3em;
+    }
+    .content {
+      order: 1;
+    }
+  }
+
   &:active {
     border: none;
   }
@@ -83,15 +111,26 @@ $large: "20px";
   }
   &--small {
     font-size: $small;
-    padding: 3px 6px;
+    width: 30px;
+    height: 30px;
+    // padding: 3px 6px;
   }
   &--middle {
     font-size: $middle;
-    padding: 6px 12px;
+    width: 100px;
+    height: 30px;
+    // padding: 6px 12px;
   }
   &--large {
     font-size: $middle;
-    padding: 12px 24px;
+    // padding: 12px 24px;
   }
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  // border: 1px solid;
 }
 </style >

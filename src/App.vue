@@ -1,12 +1,11 @@
 <template>
   <div id="app">
-    <v-button type='success'
-              @click="test"
-              size='large'>wqwq</v-button>
+    <v-button size='middle'
+              icon="poweroff">button</v-button>
 
-    <!-- <div class="demo">
-      123132
-    </div> -->
+    <v-button size='middle'
+              icon="zhu"
+              iconPosition='right'>button</v-button>
   </div>
 </template>
 
@@ -20,14 +19,14 @@ export default {
   },
   methods: {
     test() {}
+  },
+  data() {
+    return {
+      icon: "poweroff"
+    };
   }
 };
 </script>
 
-<style lang='scss'>
-.demo {
-  width: 200px;
-  height: 200px;
-  border: 1px solid;
-}
+<style lang='scss' scoped>
 </style>
