@@ -4,10 +4,11 @@
        :class="[type?'v-button--'+type:'',
                   size?'v-button--'+size:'',
                   `icon-${iconPosition}`]">
-    <svg class="icon"
-         v-if='icon'>
-      <use :xlink:href='`#i-${icon}`'></use>
-    </svg>
+
+    <v-icon class="icon"
+            v-if='icon'
+            :icon='icon'></v-icon>
+
     <div class="content">
       <slot></slot>
     </div>
@@ -16,13 +17,16 @@
 </template>
 
 <script>
+import vIcon from "../icon.vue";
 export default {
   props: {
     icon: "",
     iconPosition: {
       type: String,
-
-      default: "left"
+      default: "left",
+      validator(val) {
+        return ["left", "right"].includes(val);
+      }
     },
     type: {
       type: String,
@@ -55,7 +59,7 @@ export default {
     }
   },
   mounted() {},
-  components: {}
+  components: { vIcon }
 };
 </script>
 

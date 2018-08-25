@@ -6,16 +6,20 @@
     <v-button size='middle'
               icon="zhu"
               iconPosition='right'>button</v-button>
+
+    <v-icon icon='zhu'></v-icon>
   </div>
 </template>
 
 <script>
 import VButton from "./components/button/button.vue";
+import vIcon from "./components/icon";
 
 export default {
   name: "app",
   components: {
-    VButton
+    VButton,
+    vIcon
   },
   methods: {
     test() {}
