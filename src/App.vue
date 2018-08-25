@@ -5,9 +5,10 @@
 
     <v-button size='middle'
               icon="zhu"
+              :loading='loading'
+              @click="test"
               iconPosition='right'>button</v-button>
 
-    <v-icon icon='zhu'></v-icon>
   </div>
 </template>
 
@@ -22,11 +23,18 @@ export default {
     vIcon
   },
   methods: {
-    test() {}
+    test() {
+      alert(1);
+    }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
   },
   data() {
     return {
-      icon: "poweroff"
+      loading: true
     };
   }
 };

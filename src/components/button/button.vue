@@ -2,12 +2,18 @@
   <div class='v-button'
        @click="handleClick"
        :class="[type?'v-button--'+type:'',
+                loading?'v-button--disable':'',
                   size?'v-button--'+size:'',
                   `icon-${iconPosition}`]">
 
-    <v-icon class="icon"
-            v-if='icon'
-            :icon='icon'></v-icon>
+    <v-icon class='loading'
+            v-if='loading'
+            icon='loading'></v-icon>
+    <template v-else>
+      <v-icon class="icon"
+              v-if='icon'
+              :icon='icon'></v-icon>
+    </template>
 
     <div class="content">
       <slot></slot>
@@ -21,6 +27,7 @@ import vIcon from "../icon.vue";
 export default {
   props: {
     icon: "",
+
     iconPosition: {
       type: String,
       default: "left",
@@ -35,6 +42,14 @@ export default {
         return ["primary", "success", "danger"].includes(val);
       }
     },
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    disable: {
+      type: Boolean,
+      default: false
+    },
     size: {
       type: String,
       default: "middle",
@@ -48,7 +63,7 @@ export default {
   },
   methods: {
     handleClick(e) {
-      this.$emit("click", e);
+      this.loading ? undefined : this.$emit("click", e);
     }
   },
   computed: {
@@ -68,6 +83,15 @@ $small: "16px";
 $middle: "18px";
 $large: "20px";
 
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .v-button {
   box-sizing: border-box;
   margin: 1em;
@@ -78,6 +102,10 @@ $large: "20px";
   justify-content: center;
   align-items: center;
 
+  .loading {
+    animation: spin 1s infinite linear;
+    margin-right: 0.3em;
+  }
   > .icon {
     order: 1;
     padding-right: 0.3em;
@@ -128,6 +156,13 @@ $large: "20px";
   &--large {
     font-size: $middle;
     // padding: 12px 24px;
+  }
+
+  &--disable {
+    cursor: not-allowed;
+    color: #fff;
+    background-color: #a0cfff;
+    border-color: #a0cfff;
   }
 }
 
