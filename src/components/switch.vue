@@ -34,6 +34,15 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@mixin move($left) {
+  position: absolute;
+  content: "";
+  width: 49%;
+  height: calc(100% - 2px);
+  left: (50% - $left);
+  background: #fff;
+  transition: all 0.5s ease;
+}
 .v-switch {
   width: 40px;
   height: 20px;
@@ -56,13 +65,7 @@ export default {
   }
 
   &--active:after {
-    position: absolute;
-    content: "";
-    width: 49%;
-    height: calc(100% - 2px);
-    left: 49%;
-    background: #fff;
-    transition: all 0.5s ease;
+    @include move(1%);
   }
 
   &--inactive {
@@ -70,14 +73,7 @@ export default {
   }
 
   &--inactive:after {
-    position: absolute;
-    content: "";
-    width: 49%;
-    height: calc(100% - 2px);
-    left: 1%;
-    background: #fff;
-    transition: all 0.5s ease;
+    @include move(49%);
   }
- 
 }
 </style >
