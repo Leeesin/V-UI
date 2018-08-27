@@ -1,26 +1,36 @@
 <template>
   <div id="app">
-    <v-button size='middle'
+    <!-- <v-button size='middle'
               icon="poweroff">button</v-button>
 
     <v-button size='middle'
               icon="zhu"
               :loading='loading'
               @click="test"
-              iconPosition='right'>button</v-button>
+              iconPosition='right'>button</v-button> -->
 
+    <v-switch v-model="demo" ></v-switch>
+    <div>1111</div>
+    <v-switch v-model="demo" ></v-switch>
+
+    <!-- <v-switch v-model="demo2"></v-switch> -->
+
+    <!-- <v-switch :value='demo'
+              @input='test'></v-switch> -->
   </div>
 </template>
 
 <script>
 import VButton from "./components/button/button.vue";
 import vIcon from "./components/icon";
+import vSwitch from "./components/switch";
 
 export default {
   name: "app",
   components: {
     VButton,
-    vIcon
+    vIcon,
+    vSwitch
   },
   methods: {
     test() {
@@ -34,6 +44,8 @@ export default {
   },
   data() {
     return {
+      demo: false,
+      demo2: true,
       loading: true
     };
   }
