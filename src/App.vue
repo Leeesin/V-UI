@@ -1,21 +1,12 @@
 <template>
   <div id="app">
-    <!-- <v-button size='middle'
-              icon="poweroff">button</v-button>
-
-    <v-button size='middle'
-              icon="zhu"
-              :loading='loading'
-              @click="test"
-              iconPosition='right'>button</v-button> 
-
-    <v-switch v-model="demo"></v-switch>
-    <div>22222</div>
-    <v-switch v-model="demo"></v-switch> -->
-    <v-checkbox :myValue='demo'
-                ref='demo'></v-checkbox>
-
-    <button @click="test">test</button>
+    <v-switch v-model="demo"
+              @click.native="test"
+              :lazy='true'
+              activeValue='1'
+              activeLabel='卡卡'
+              inActiveValue='2'
+              inActiveLabel='122'></v-switch>
 
   </div>
 </template>
@@ -36,15 +27,13 @@ export default {
   },
   methods: {
     test() {
-      setTimeout(() => {
-        this.$refs.demo.update([1, 2, 3]);
-      }, 2000);
+      alert(111);
     }
   },
   mounted() {},
   data() {
     return {
-      demo: []
+      demo: 1
     };
   }
 };

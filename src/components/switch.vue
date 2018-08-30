@@ -1,9 +1,11 @@
 <template>
-  <div class='v-switch'
-       :class="[value?'v-switch--active':'v-switch--inactive',round?'v-switch--round':'']"
-       @click="change">
-    <!-- <span>开</span> -->
-    <!-- <span>关</span> -->
+  <div class="v-switch-wrap">
+    <!-- 为了兼容和提高容错性，采用非严格等于 -->
+    <div class="v-switch-text">{{value==activeValue?activeLabel:inActiveLabel}}</div>
+    <div class='v-switch'
+         :class="[value==activeValue?'v-switch--active':'v-switch--inactive',round?'v-switch--round':'']"
+         @click="handleChange">
+    </div>
   </div>
 </template>
 
@@ -13,22 +15,47 @@ export default {
     value: "",
     round: {
       type: Boolean,
+      default: false
+    },
+    activeValue: {
       default: true
+    },
+    activeLabel: {
+      default: "启用"
+    },
+    inActiveValue: {
+      default: true
+    },
+    inActiveLabel: {
+      default: "禁用"
+    },
+    lazy: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {};
   },
   methods: {
+    handleChange() {
+      this.beforeChange() ? this.change() : "";
+    },
+
     change() {
-      this.$emit("input", !this.value);
+      let res =
+        this.value === this.activeValue ? this.inActiveValue : this.activeValue;
+      this.$emit("input", res);
+    },
+    beforeChange() {
+      return !this.lazy;
     }
   },
-  watch: {
-    value: function() {}
-  },
+  watch: {},
   computed: {},
-  mounted() {},
+  mounted() {
+    // console.log(,'');
+  },
   components: {}
 };
 </script>
@@ -38,42 +65,51 @@ export default {
   position: absolute;
   content: "";
   width: 49%;
-  height: calc(100% - 2px);
+  height: calc(100% - 1.5px);
   left: (50% - $left);
   background: #fff;
   transition: all 0.5s ease;
+  border-radius: 2px;
 }
-.v-switch {
-  width: 40px;
-  height: 20px;
-  line-height: 20px;
-  font-size: 12px;
-  cursor: pointer;
-  box-sizing: border-box;
-  padding: 1px;
-  position: relative;
-
-  &--round {
-    border-radius: 10px;
+.v-switch-wrap {
+  display: inline-flex;
+  align-items: center;
+  .v-switch-text {
+    margin-right: 0.3em;
   }
-  &--round:after {
-    border-radius: 10px;
-  }
+  .v-switch {
+    width: 40px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    box-sizing: border-box;
+    padding: 1px;
+    position: relative;
+    border-radius: 2px;
 
-  &--active {
-    background: #1890ff;
-  }
+    &--round {
+      border-radius: 10px;
+    }
+    &--round:after {
+      border-radius: 10px;
+    }
 
-  &--active:after {
-    @include move(1%);
-  }
+    &--active {
+      background: #ffc836;
+    }
 
-  &--inactive {
-    background: rgba(0, 0, 0, 0.25);
-  }
+    &--active:after {
+      @include move(1%);
+    }
 
-  &--inactive:after {
-    @include move(49%);
+    &--inactive {
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    &--inactive:after {
+      @include move(49%);
+    }
   }
 }
 </style >
