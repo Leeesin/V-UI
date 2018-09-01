@@ -1,50 +1,30 @@
 <template>
-    <div class='m-checkbox'>
-        <div v-for='(item) in arr'
-             :key="item">
-            <input type="checkbox"
-                   :checked='binding[item]'> item
-        </div>
+  <div class='m-checkbox'>
+    <input type="checkbox"
+           :checked='value'>
 
-    </div>
+  </div>
 </template>
 
 <script>
 export default {
   props: {
-    myValue: {
-      type: Array
+    value: {
+      // type: Boolean
     }
   },
   data() {
-    return {
-      arr: [1, 2, 3],
-      binding: {}
-    };
+    return {};
   },
-  methods: {
-    generate() {
-      let obj = {};
-      for (let i = 0; i < 10; i++) {
-        obj[i] = false;
-      }
-      this.binding = obj;
-    },
-    update(val) {
-      for (const item of val) {
-        this.binding[item] = true;
-      }
-      // alert(11)
-
-      //   for (const item of this.myValue) {
-      //     this.binding[item] = true;
-      //   }
-    }
-  },
+  methods: {},
   mounted() {
-    this.generate();
+    console.log(this.value, "this.value");
   },
-  components: {}
+  computed: {
+    myValue: function() {
+      return this.value;
+    }
+  }
 };
 </script>
 

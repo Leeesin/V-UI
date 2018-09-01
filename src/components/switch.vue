@@ -1,7 +1,8 @@
 <template>
   <div class="v-switch-wrap">
     <!-- 为了兼容和提高容错性，采用非严格等于 -->
-    <div class="v-switch-text">{{value==activeValue?activeLabel:inActiveLabel}}</div>
+    <div class="v-switch-text"
+         v-if='showLabel'>{{value==activeValue?activeLabel:inActiveLabel}}</div>
     <div class='v-switch'
          :class="[value==activeValue?'v-switch--active':'v-switch--inactive',round?'v-switch--round':'']"
          @click="handleChange">
@@ -13,6 +14,10 @@
 export default {
   props: {
     value: "",
+    showLabel: {
+      type: Boolean,
+      default: true
+    },
     round: {
       type: Boolean,
       default: false
