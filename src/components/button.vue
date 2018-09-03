@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import vIcon from "../icon.vue";
+import vIcon from "./icon.vue";
 export default {
   props: {
     icon: "",
@@ -93,6 +93,7 @@ $large: "20px";
 }
 
 .v-button {
+  color: red;
   box-sizing: border-box;
   margin: 1em;
   vertical-align: middle;

@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import myPlugin from "./components/plugin";
-// import "./test/button";
+import myPlugin from "./plugin.js";
 
 Vue.use(myPlugin)
 
