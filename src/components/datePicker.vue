@@ -1,25 +1,25 @@
 <template>
   <div class='v-datePicker'>
-    <div>{{current.year}}年{{current.month}}月</div>
+    <div>{{temp.year}}年{{temp.month}}月</div>
     <button @click="getLastMonth">上一月</button>
     <hr>
     <button @click="getNextMonth">下一月</button>
     <table class="el-date-table">
       <thead>
         <tr>
-          <th>日</th>
           <th>一</th>
           <th>二</th>
           <th>三</th>
           <th>四</th>
           <th>五</th>
           <th>六</th>
+          <th>日</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for='(item,index) in dateMap'
             :key="index">
-          <td :class="item2.showDate===current.date?'active':''"
+          <td :class="item2.showDate===current.date&&item2.month===current.month?'active':''"
               v-for='(item2,index2) in item'
               :key="index2"
               @click="changeDate(item2.showDate)">{{item2.showDate}}</td>
@@ -39,6 +39,13 @@ export default {
         month: "",
         date: ""
       },
+      //用户点击选择的date
+      temp: {
+        year: "",
+        month: "",
+        date: ""
+      },
+
       monthDate: [],
       dateMap: {} //将数据按照每一行分类
     };
@@ -53,7 +60,7 @@ export default {
         year = today.getFullYear();
         month = today.getMonth() + 1;
         this.current.year = today.getFullYear();
-        this.current.month = today.getMonth();
+        this.current.month = today.getMonth() + 1;
         this.current.date = today.getDate();
       }
       let firstDay = new Date(year, month - 1, 1);
@@ -90,18 +97,24 @@ export default {
     },
     //将数据按照每一行分类
     generateRowData() {
+      let obj = {};
       let arr = [0, 7, 14, 21, 28, 35];
       for (let i = 0; i < arr.length; i++) {
         let item = arr[i];
-        this.dateMap[i] = this.monthDate.slice(item, item + 7);
+        obj[i] = this.monthDate.slice(item, item + 7);
       }
+      this.dateMap = obj;
     },
     getLastMonth() {
-      this.current.month -= 1;
-      this.monthDate = this.getMonthDate(this.current.year, this.current.month);
+      this.temp.month = this.temp.month - 1;
+      this.monthDate = this.getMonthDate(this.temp.year, this.temp.month);
       this.generateRowData();
     },
-    getNextMonth() {},
+    getNextMonth() {
+      this.temp.month = this.temp.month + 1;
+      this.monthDate = this.getMonthDate(this.temp.year, this.temp.month);
+      this.generateRowData();
+    },
     changeDate(date) {
       this.current.date = date;
     }
@@ -110,6 +123,7 @@ export default {
   mounted() {
     this.monthDate = this.getMonthDate();
     this.generateRowData();
+    this.temp = { ...this.current };
   },
   components: {}
 };
