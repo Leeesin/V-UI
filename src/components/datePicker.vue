@@ -17,17 +17,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td :class="item.showDate===current.date?'active':''"
-              v-for='(item,index) in row1'
-              :key="index"
-              @click="changeDate(item.showDate)">{{item.showDate}}</td>
-        </tr>
-        <tr>
-          <td :class="item.showDate===current.date?'active':''"
-              v-for='(item,index) in row2'
-              :key="index"
-              @click="changeDate(item.showDate)">{{item.showDate}}</td>
+        <tr v-for='(item,index) in dateMap'
+            :key="index">
+          <td :class="item2.showDate===current.date?'active':''"
+              v-for='(item2,index2) in item'
+              :key="index2"
+              @click="changeDate(item2.showDate)">{{item2.showDate}}</td>
         </tr>
       </tbody>
     </table>
@@ -44,15 +39,8 @@ export default {
         month: "",
         date: ""
       },
-
       monthDate: [],
-      row1: [],
-      row2: [],
-      row3: [],
-      row4: [],
-      row5: [],
-      row6: [],
-      row7: []
+      dateMap: {} //将数据按照每一行分类
     };
   },
   methods: {
@@ -100,23 +88,18 @@ export default {
       }
       return ret;
     },
-    generateHtmlString() {
-      // [0, 6, 13, 20, 27, 34, 41]
-      let arr = [0];
-      this.row1 = [];
-      this.row2 = [];
-      for (let i = 0; i < this.monthDate.length; i++) {
-        if (0 <= i && i <= 6) {
-          this.row1.push(this.monthDate[i]);
-        } else if (7 <= i && i <= 13) {
-          this.row2.push(this.monthDate[i]);
-        }
+    //将数据按照每一行分类
+    generateRowData() {
+      let arr = [0, 7, 14, 21, 28, 35];
+      for (let i = 0; i < arr.length; i++) {
+        let item = arr[i];
+        this.dateMap[i] = this.monthDate.slice(item, item + 7);
       }
     },
     getLastMonth() {
       this.current.month -= 1;
       this.monthDate = this.getMonthDate(this.current.year, this.current.month);
-      this.generateHtmlString();
+      this.generateRowData();
     },
     getNextMonth() {},
     changeDate(date) {
@@ -126,7 +109,7 @@ export default {
   computed: {},
   mounted() {
     this.monthDate = this.getMonthDate();
-    this.generateHtmlString();
+    this.generateRowData();
   },
   components: {}
 };
