@@ -1,29 +1,32 @@
 <template>
-    <div class='v-cascader'>
-        <div class="v-cascader-label"
-             @click="handleClick">
-        </div>
-        <div class="v-cascader-picker"
-             :class="[pickerVisible?'v-cascader-picker--show':'v-cascader-picker--hide']">
-            <div class="v-cascader-picker-level_1">
-                <div v-for='(item,index) in options '
-                     :key="index"
-                     @click="getActiveChildren(item)">{{item.label}}</div>
-            </div>
-            <div class="v-cascader-picker-level_2"
-                 v-show='level_2_visible'>
-                <div v-for='(item2,index2) in activeChildren '
-                     :key="index2"
-                     @click="getActiveChildren2(item2)">{{item2.label}}</div>
-            </div>
-            <div class="v-cascader-picker-level_3"
-                 v-if='level_3_visible'>
-                <div v-for='(item3,index3) in activeChildren[0].children '
-                     :key="index3"
-                     @click="getActiveChildren2(item3)">{{item3.label}}</div>
-            </div>
-        </div>
+  <div class='v-cascader'>
+    <div class="v-cascader-label"
+         @click="handleClick">
     </div>
+    <div class="v-cascader-picker"
+         :class="[pickerVisible?'v-cascader-picker--show':'v-cascader-picker--hide']">
+      <div class="v-cascader-picker-level_1">
+        <div v-for='(item,index) in options '
+             :key="index"
+             @click="getActiveChildren(item)">{{item.label}}</div>
+      </div>
+      <div class="v-cascader-picker-level_2"
+           v-show='level_2_visible'>
+        <div v-for='(item2,index2) in activeChildren '
+             :key="index2"
+             @click="getActiveChildren2(item2)">{{item2.label}}</div>
+      </div>
+      <div class="v-cascader-picker-level_3"
+           v-if='level_3_visible'>
+        <div v-for='(item3,index3) in activeChildren[0].children '
+             :key="index3"
+             @click="getActiveChildren2(item3)">{{item3.label}}</div>
+      </div>
+    </div>
+
+   
+
+  </div>
 </template>
 
 <script>
@@ -62,6 +65,7 @@ const options = [
   }
 ];
 export default {
+  name: "vCascader",
   data() {
     return {
       pickerVisible: false,

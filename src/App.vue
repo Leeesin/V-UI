@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <VCascader></VCascader>
+    <v-date-picker></v-date-picker>
   </div>
 </template>
 
@@ -18,8 +18,5 @@ export default {
 
 <style lang='scss' scoped>
 .demo {
-  height: 100px;
-  width: 100%;
-  background: red;
 }
 </style>
